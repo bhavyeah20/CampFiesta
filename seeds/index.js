@@ -3,7 +3,13 @@ const Campground = require('../models/campground');
 const cities = require('./cities');
 const { places, descriptors } = require('./seedHelpers');
 
-mongoose.connect('mongodb://localhost:27017/camp-fiesta', {
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
+
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/camp-fiesta';
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true
@@ -25,7 +31,7 @@ const seedDB = async () => {
             title: `${sample(descriptors)} ${sample(places)}`,
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             //Your User ID
-            author: '5ff841800635a3066839f09b',
+            author: '5ff83d7a4bbf732cd4725bb6',
             images: [
                 {
                     url: 'https://res.cloudinary.com/dwtkhznmd/image/upload/v1610105482/CampFiesta/cfmifjki9gkdcxjjxc91.jpg',
